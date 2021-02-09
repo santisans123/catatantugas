@@ -255,7 +255,7 @@
                         ></v-text-field>
 
                         <v-btn @click="addTodo" color="info"> Kirim </v-btn>
-                        <v-btn @click="clear">Bersihkan</v-btn>
+                        <v-btn @click="clear" class="ml-5">Bersihkan</v-btn>
                     </v-form>
 
                     <v-data-table
