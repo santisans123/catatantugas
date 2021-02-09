@@ -1,4 +1,4 @@
-<template>
+(<template>
   <v-card
     dark
     flat
@@ -264,14 +264,12 @@
                         hide-actions
                         class="elevation-1"
                     >
-                    <template slot="item" slot-scope="props">
-                        <td class="text-xs-left">{{ props.item.nama }}</td>
-                        <td class="text-xs-left">{{ props.item.desk }}</td>
-                        <td class="text-xs-left"> 
-                            <v-btn icon @click="removeTodo(props.item)">
+                    <template v-slot:item.hapus="{item}">
+                      
+                            <v-btn icon @click="removeTodo(item)">
                             <v-icon color="pink">mdi-delete</v-icon>
                             </v-btn>    
-                        </td>
+                        
                     </template>
                     </v-data-table>
                 </div>
@@ -321,7 +319,7 @@
     headers: [
     { text: "Nama Tugas", value: "nama" },
     { text: "Deskripsi", value: "desk" },
-    { text: "Hapus", value: "" }
+    { text: "Hapus", value: "hapus" }
     ],
 
     nama: "",
@@ -345,7 +343,6 @@
 
         drawer: null,
 
-        
         //catatan
         catatan:'',
 
@@ -373,18 +370,24 @@
             });
             this.nama = "";
             this.desk = "";
+            console.log(this.todos);
+            this.simpan();
+            
         }
+
         },
+
         removeTodo(id) {
         this.todos.splice(id, 1);
+        this.simpan();
         },
+
         clear() {
         this.nama = "";
         this.desk = "";
-        }
-    },
+        },
 
-    simpanData() {
+        simpanData() {
       localStorage.senin1 = this.senin1;
       localStorage.senin2 = this.senin2;
       localStorage.selasa1 = this.selasa1;
@@ -398,10 +401,24 @@
       localStorage.jtmb = this.jtmb;
       console.log('Diisi ya..');
     },
+
+    simpan() {
+      const parsed = JSON.stringify(this.todos);
+      localStorage.setItem('nama', parsed);
+    },
+    },
+
+    
     
   mounted() {
       //Simpan tugas
-    
+    if (localStorage.getItem('nama')) {
+      try {
+        this.todos = JSON.parse(localStorage.getItem('nama'));
+      } catch(e) {
+        localStorage.removeItem('nama');
+      }
+    }
 
     //catatan
     if(localStorage.catatan) this.catatan = localStorage.catatan;
@@ -423,7 +440,10 @@
   watch:{
     catatan(newcatat) {
       localStorage.catatan = newcatat;
-    }
+    },
+    //todos(){
+        //this.todos()
+    //}
   }
 }
 </script>
@@ -455,3 +475,4 @@
 }
 </style>
 
+)
