@@ -374,7 +374,6 @@
             this.simpan();
             
         }
-
         },
 
         removeTodo(id) {
