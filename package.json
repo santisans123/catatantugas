@@ -1,3 +1,10 @@
+"devDependencies": {
+  "execa": "latest"
+},
+"scripts": {
+  "deploy": "node scripts/vue.config.js"
+ },
+
 {
   "name": "todolist",
   "version": "0.1.0",
