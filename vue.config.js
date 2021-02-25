@@ -1,4 +1,5 @@
-// vue.config.js
 module.exports = {
-publicPath: ‘/todolist/’
-}
+    publicPath: process.env.NODE_ENV === 'production'
+      ? '/catatantugas/'
+      : '/'
+  }
